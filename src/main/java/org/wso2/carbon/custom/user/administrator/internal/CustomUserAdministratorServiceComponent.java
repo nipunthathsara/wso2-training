@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.custom.user.manager.internal;
+package org.wso2.carbon.custom.user.administrator.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,18 +27,27 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.wso2.carbon.custom.user.administrator.CustomUserAdministrator;
 import org.wso2.carbon.user.core.service.RealmService;
+
+import static org.wso2.carbon.custom.user.administrator.Constants.LIST_USERS;
 
 @Component(name = "org.wso2.carbon.identity.custom.user.list.component",
            immediate = true)
-public class CustomUserViewerServiceComponent {
+public class CustomUserAdministratorServiceComponent {
 
-    private static final Log log = LogFactory.getLog(CustomUserViewerServiceComponent.class);
+    private static final Log log = LogFactory.getLog(CustomUserAdministratorServiceComponent.class);
 
     @Activate
     protected void activate(ComponentContext context) {
+
         try {
-            boolean migrationRequired = Boolean.parseBoolean(System.getProperty(Constants.PERMISSION_CLIENT));
+            boolean listUsers = Boolean.parseBoolean(System.getProperty(LIST_USERS));
+            if (listUsers) {
+                CustomUserAdministrator administrator = new CustomUserAdministrator();
+                administrator.listUsers("*", 10);
+                log.info("Custom component is triggered.");
+            }
             if (log.isDebugEnabled()) {
                 log.debug("Custom component is activated.");
             }
@@ -62,12 +71,12 @@ public class CustomUserViewerServiceComponent {
                unbind = "unsetRealmService")
     protected void setRealmService(RealmService realmService) {
 
-        // Custom user store manager bundle depends on the Realm Service
+        // Custom user administrator bundle depends on the Realm Service
         // Therefore, bind the realm service
         if (log.isDebugEnabled()) {
             log.debug("Setting the Realm Service");
         }
-        CustomUserViewerDataHolder.getInstance().setRealmService(realmService);
+        CustomUserAdministratorDataHolder.getInstance().setRealmService(realmService);
     }
 
     protected void unsetRealmService(RealmService realmService) {
@@ -75,6 +84,6 @@ public class CustomUserViewerServiceComponent {
         if (log.isDebugEnabled()) {
             log.debug("Unset the Realm Service.");
         }
-        CustomUserViewerDataHolder.getInstance().setRealmService(null);
+        CustomUserAdministratorDataHolder.getInstance().setRealmService(null);
     }
 }

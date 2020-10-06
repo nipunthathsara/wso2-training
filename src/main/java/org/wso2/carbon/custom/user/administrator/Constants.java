@@ -16,9 +16,9 @@
  * under the License.
  */
 
-package org.wso2.carbon.custom.user.manager;
+package org.wso2.carbon.custom.user.administrator;
 
 public class Constants {
 
-
+    public static final String LIST_USERS = "listUsers";
 }
