@@ -16,11 +16,10 @@
  * under the License.
  */
 
-package org.wso2.custom.userstore.manager.internal;
+package org.wso2.carbon.custom.user.manager.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -28,28 +27,23 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-import org.wso2.carbon.user.api.UserStoreManager;
 import org.wso2.carbon.user.core.service.RealmService;
-import org.wso2.custom.userstore.manager.CustomUserStoreManager;
 
-@Component(name = "org.wso2.carbon.identity.custom.user.store.manager",
+@Component(name = "org.wso2.carbon.identity.custom.user.list.component",
            immediate = true)
-public class CustomUserStoreServiceComponent {
+public class CustomUserViewerServiceComponent {
 
-    private static final Log log = LogFactory.getLog(CustomUserStoreServiceComponent.class);
+    private static final Log log = LogFactory.getLog(CustomUserViewerServiceComponent.class);
 
     @Activate
     protected void activate(ComponentContext context) {
         try {
-            BundleContext bundleContext = context.getBundleContext();
-            // Register the new user store manager as an OSGI service
-            bundleContext.registerService(UserStoreManager.class.getName(), new CustomUserStoreManager(), null);
-            log.info("**************************************************");
+            boolean migrationRequired = Boolean.parseBoolean(System.getProperty(Constants.PERMISSION_CLIENT));
             if (log.isDebugEnabled()) {
-                log.debug("Custom user store manager is activated.");
+                log.debug("Custom component is activated.");
             }
         } catch (Throwable e) {
-            log.error("Error activating the custom user store manager", e);
+            log.error("Error activating the custom component", e);
         }
     }
 
@@ -57,7 +51,7 @@ public class CustomUserStoreServiceComponent {
     protected void deactivate(ComponentContext cxt) {
 
         if (log.isDebugEnabled()) {
-            log.debug("Custom user store manager bundle is deactivated.");
+            log.debug("Custom component is deactivated.");
         }
     }
 
@@ -73,7 +67,7 @@ public class CustomUserStoreServiceComponent {
         if (log.isDebugEnabled()) {
             log.debug("Setting the Realm Service");
         }
-        CustomUserStoreDataHolder.getInstance().setRealmService(realmService);
+        CustomUserViewerDataHolder.getInstance().setRealmService(realmService);
     }
 
     protected void unsetRealmService(RealmService realmService) {
@@ -81,6 +75,6 @@ public class CustomUserStoreServiceComponent {
         if (log.isDebugEnabled()) {
             log.debug("Unset the Realm Service.");
         }
-        CustomUserStoreDataHolder.getInstance().setRealmService(null);
+        CustomUserViewerDataHolder.getInstance().setRealmService(null);
     }
 }

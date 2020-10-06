@@ -16,21 +16,21 @@
  * under the License.
  */
 
-package org.wso2.custom.userstore.manager.internal;
+package org.wso2.carbon.custom.user.manager.internal;
 
 import org.wso2.carbon.user.core.service.RealmService;
 
-public class CustomUserStoreDataHolder {
+public class CustomUserViewerDataHolder {
 
-    private static CustomUserStoreDataHolder dataHolder = new CustomUserStoreDataHolder();
+    private static CustomUserViewerDataHolder dataHolder = new CustomUserViewerDataHolder();
     private RealmService realmService;
 
-    public static CustomUserStoreDataHolder getInstance() {
+    public static CustomUserViewerDataHolder getInstance() {
 
         return dataHolder;
     }
 
-    public void setDataHolder(CustomUserStoreDataHolder dataHolder) {
+    public void setDataHolder(CustomUserViewerDataHolder dataHolder) {
 
         this.dataHolder = dataHolder;
     }
