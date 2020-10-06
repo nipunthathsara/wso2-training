@@ -4,7 +4,7 @@ package org.wso2.custom.userstore.manager;
  * Hello world!
  *
  */
-public class App 
+public class CustomUserStoreManager
 {
     public static void main( String[] args )
     {
