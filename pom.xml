@@ -19,6 +19,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <apache.felix.scr.ds.annotations.version>1.2.8</apache.felix.scr.ds.annotations.version>
         <equinox.osgi.services.version>3.5.100.v20160504-1419</equinox.osgi.services.version>
+        <carbon.kernel.version>4.6.0</carbon.kernel.version>
     </properties>
 
     <dependencies>
@@ -36,6 +37,11 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.user.core</artifactId>
+            <version>${carbon.kernel.version}</version>
         </dependency>
     </dependencies>
 

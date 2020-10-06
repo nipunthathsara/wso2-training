@@ -1,13 +1,11 @@
 package org.wso2.custom.userstore.manager;
 
+import org.wso2.carbon.user.core.ldap.UniqueIDReadWriteLDAPUserStoreManager;
+
 /**
- * Hello world!
- *
+ * Custom user store manager implementation
  */
-public class CustomUserStoreManager
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+public class CustomUserStoreManager extends UniqueIDReadWriteLDAPUserStoreManager {
+
+    // Override the methods here
 }
